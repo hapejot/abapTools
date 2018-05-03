@@ -1,6 +1,6 @@
 class ZCL_ABAPTOOLS_LOG definition
   public
-  create private .
+  create public .
 
 public section.
 protected section.
