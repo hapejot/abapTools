@@ -13,6 +13,14 @@
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_HTML_KOJS</CLSNAME>
+     <CMPNAME>TEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Test method</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
 </abapGit>

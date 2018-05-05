@@ -1,51 +1,54 @@
-CLASS zcl_html_kojs DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PRIVATE .
+class ZCL_HTML_KOJS definition
+  public
+  final
+  create private .
 
-  PUBLIC SECTION.
+public section.
 
-    TYPES:
-      tt_nametab TYPE TABLE OF fieldname WITH DEFAULT KEY .
+  types:
+    tt_nametab TYPE TABLE OF fieldname WITH DEFAULT KEY .
 
-    CLASS-METHODS:
-
-      get_gui_color        IMPORTING
-                             id_id             TYPE i  DEFAULT cl_wf_gui_resources_4_html=>col_background_level1
-                           RETURNING
-                             VALUE(rd_bgcolor) TYPE string,
-      create               IMPORTING
-                             !ir_parent      TYPE REF TO cl_gui_container
-                           RETURNING
-                             VALUE(r_result) TYPE REF TO zcl_html_kojs,
-      project_table        IMPORTING
-                             !it_table        TYPE STANDARD TABLE
-                             !it_nametab      TYPE tt_nametab
-                           RETURNING
-                             VALUE(rr_result) TYPE REF TO data,
-      project_struct       IMPORTING
-                             !is_struct       TYPE any
-                             !it_nametab      TYPE tt_nametab
-                           RETURNING
-                             VALUE(rr_result) TYPE REF TO data,
-      string_to_table      IMPORTING
-                             !i_str          TYPE string OPTIONAL
-                           RETURNING
-                             VALUE(r_result) TYPE sdydo_text_table,
-      handle_dialog_close
-            FOR EVENT close OF cl_gui_dialogbox_container
-        IMPORTING
-            !sender .
-
-    METHODS write
-      IMPORTING
-        !i_name          TYPE string
-        !i_data          TYPE any
-      RETURNING
-        VALUE(rr_output) TYPE REF TO zcl_html_kojs .
-    METHODS display
-      IMPORTING
-        !iv_template TYPE wwwdataid-objid DEFAULT 'ZORDERHEADER' .
+  class-methods GET_GUI_COLOR
+    importing
+      !ID_ID type I default CL_WF_GUI_RESOURCES_4_HTML=>COL_BACKGROUND_LEVEL1
+    returning
+      value(RD_BGCOLOR) type STRING .
+  class-methods CREATE
+    importing
+      !IR_PARENT type ref to CL_GUI_CONTAINER
+    returning
+      value(R_RESULT) type ref to ZCL_HTML_KOJS .
+  class-methods PROJECT_TABLE
+    importing
+      !IT_TABLE type STANDARD TABLE
+      !IT_NAMETAB type TT_NAMETAB
+    returning
+      value(RR_RESULT) type ref to DATA .
+  class-methods PROJECT_STRUCT
+    importing
+      !IS_STRUCT type ANY
+      !IT_NAMETAB type TT_NAMETAB
+    returning
+      value(RR_RESULT) type ref to DATA .
+  class-methods STRING_TO_TABLE
+    importing
+      !I_STR type STRING optional
+    returning
+      value(R_RESULT) type SDYDO_TEXT_TABLE .
+  class-methods HANDLE_DIALOG_CLOSE
+    for event CLOSE of CL_GUI_DIALOGBOX_CONTAINER
+    importing
+      !SENDER .
+  methods WRITE
+    importing
+      !I_NAME type STRING
+      !I_DATA type ANY
+    returning
+      value(RR_OUTPUT) type ref to ZCL_HTML_KOJS .
+  methods DISPLAY
+    importing
+      !IV_TEMPLATE type WWWDATAID-OBJID default 'ZORDERHEADER' .
+  class-methods TEST .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -305,17 +308,9 @@ CLASS ZCL_HTML_KOJS IMPLEMENTATION.
 *    APPEND '            this.itemToAdd("");                                   ' TO lt_js.
 *    APPEND '        }                                                         ' TO lt_js.
 *    APPEND '    }.bind(this);                                                 ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-    APPEND '                                                                  ' TO lt_js.
-*    APPEND 'alert("hello");                                                   ' TO lt_js.
+*    APPEND '                                                                  ' TO lt_js.
     APPEND 'ko.applyBindings(g_Model);' TO lt_js.
+    APPEND 'alert("binding completed");                                                   ' TO lt_js.
 
     CALL METHOD mr_viewer->load_data
       EXPORTING
@@ -407,6 +402,19 @@ CLASS ZCL_HTML_KOJS IMPLEMENTATION.
       l_len = strlen( l_str ).
     ENDWHILE.
     APPEND l_str TO r_result.
+
+  ENDMETHOD.
+
+
+  METHOD test.
+
+
+    DATA(lr_html) = zcl_html_kojs=>create( cl_gui_container=>default_screen ).
+    DATA(msg) = VALUE bapiret2( message = 'Meldung' ).
+    lr_html->write(
+            i_name = 'MSG'
+            i_data = msg
+          )->display( iv_template = 'Z_MAINJS' ).
 
   ENDMETHOD.
 
