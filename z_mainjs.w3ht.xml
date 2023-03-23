@@ -6,20 +6,14 @@
    <TEXT>Hauptbild</TEXT>
    <PARAMS>
     <WWWPARAMS>
-     <RELID>HT</RELID>
-     <OBJID>Z_MAINJS</OBJID>
      <NAME>fileextension</NAME>
      <VALUE>.html</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>HT</RELID>
-     <OBJID>Z_MAINJS</OBJID>
      <NAME>filename</NAME>
      <VALUE>~wwwtmp.html</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>HT</RELID>
-     <OBJID>Z_MAINJS</OBJID>
      <NAME>mimetype</NAME>
      <VALUE>text/html</VALUE>
     </WWWPARAMS>

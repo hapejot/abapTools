@@ -6,20 +6,14 @@
    <TEXT>Knockout JS</TEXT>
    <PARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>Z_KNOCKOUTJS</OBJID>
      <NAME>fileextension</NAME>
      <VALUE>.js</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>Z_KNOCKOUTJS</OBJID>
      <NAME>filename</NAME>
      <VALUE>knockout-3.4.0.js</VALUE>
     </WWWPARAMS>
     <WWWPARAMS>
-     <RELID>MI</RELID>
-     <OBJID>Z_KNOCKOUTJS</OBJID>
      <NAME>mimetype</NAME>
      <VALUE>application/javascript</VALUE>
     </WWWPARAMS>
