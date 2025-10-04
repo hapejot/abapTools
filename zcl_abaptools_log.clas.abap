@@ -136,8 +136,13 @@ CLASS ZCL_ABAPTOOLS_LOG IMPLEMENTATION.
       IMPORTING
         e_s_msg_handle = ls_handle
       EXCEPTIONS
-        OTHERS         = 0.
-    INSERT ls_handle INTO TABLE me->t_msg.
+        log_not_found  = 1
+        msg_inconsistent = 2
+        log_is_full    = 3
+        OTHERS         = 4.
+    IF sy-subrc = 0.
+      INSERT ls_handle INTO TABLE me->t_msg.
+    ENDIF.
   ENDMETHOD.
 
 
@@ -262,8 +267,13 @@ CLASS ZCL_ABAPTOOLS_LOG IMPLEMENTATION.
       IMPORTING
         e_s_msg_handle = ls_msg_handle
       EXCEPTIONS
-        OTHERS         = 0.
-    APPEND ls_msg_handle TO t_msg.
+        log_not_found  = 1
+        msg_inconsistent = 2
+        log_is_full    = 3
+        OTHERS         = 4.
+    IF sy-subrc = 0.
+      APPEND ls_msg_handle TO t_msg.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -378,7 +388,13 @@ CLASS ZCL_ABAPTOOLS_LOG IMPLEMENTATION.
       IMPORTING
         e_log_handle = me->log_hndl
       EXCEPTIONS
-        OTHERS       = 0.
+        log_header_inconsistent = 1
+        OTHERS       = 2.
+    IF sy-subrc <> 0.
+      " Log creation failed - handle the error appropriately
+      CLEAR me->log_hndl.
+    ENDIF.
+    
     IF  is_log-object     IS INITIAL OR
         is_log-subobject  IS INITIAL.
       CLEAR me->saveable.
