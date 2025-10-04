@@ -52,6 +52,9 @@ public section.
   PROTECTED SECTION.
   PRIVATE SECTION.
 
+    CONSTANTS:
+      c_max_line_length TYPE i VALUE 255. " Maximum line length for SDYDO_TEXT_TABLE
+
     DATA:
       gt_parts TYPE TABLE OF string .
     DATA m_value TYPE string .
@@ -102,7 +105,7 @@ CLASS ZCL_HTML_KOJS IMPLEMENTATION.
 
 
   METHOD constructor.
-
+    " Constructor is intentionally empty - initialization is handled in init() method
   ENDMETHOD.
 
 
@@ -299,18 +302,8 @@ CLASS ZCL_HTML_KOJS IMPLEMENTATION.
         OTHERS                 = 5.
 
 
-*    APPEND 'var SimpleListModel = function(items) {                           ' TO lt_js.
-*    APPEND '    this.items = ko.observableArray(items);                       ' TO lt_js.
-*    APPEND '    this.itemToAdd = ko.observable("");                           ' TO lt_js.
-*    APPEND '    this.addItem = function() {                                   ' TO lt_js.
-*    APPEND '        if (this.itemToAdd() != "") {                             ' TO lt_js.
-*    APPEND '            this.items.push(this.itemToAdd());                    ' TO lt_js.
-*    APPEND '            this.itemToAdd("");                                   ' TO lt_js.
-*    APPEND '        }                                                         ' TO lt_js.
-*    APPEND '    }.bind(this);                                                 ' TO lt_js.
-*    APPEND '                                                                  ' TO lt_js.
     APPEND 'ko.applyBindings(g_Model);' TO lt_js.
-    APPEND 'alert("binding completed");                                                   ' TO lt_js.
+    " Note: Debug alert removed - enable in custom.js if needed for debugging
 
     CALL METHOD mr_viewer->load_data
       EXPORTING
@@ -396,9 +389,9 @@ CLASS ZCL_HTML_KOJS IMPLEMENTATION.
 
     DATA(l_str) = i_str.
     DATA(l_len) = strlen( l_str ).
-    WHILE l_len > 255.
-      APPEND l_str(255) TO r_result.
-      SHIFT l_str LEFT BY 255 PLACES.
+    WHILE l_len > c_max_line_length.
+      APPEND l_str(c_max_line_length) TO r_result.
+      SHIFT l_str LEFT BY c_max_line_length PLACES.
       l_len = strlen( l_str ).
     ENDWHILE.
     APPEND l_str TO r_result.
